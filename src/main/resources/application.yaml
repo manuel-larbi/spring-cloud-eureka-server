@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME}
+
+server:
+  port: ${SERVER_PORT}
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+  instance:
+    hostname: ${SERVER_HOSTNAME}
+logging:
+  level:
+    com:
+      netflix:
+        eureka: off
+        discovery: off
