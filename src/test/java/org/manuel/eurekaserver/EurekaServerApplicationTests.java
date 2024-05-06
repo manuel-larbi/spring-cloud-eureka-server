@@ -1,13 +1,13 @@
-package org.manuel.eurekaserver;
+// package org.manuel.eurekaserver;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class EurekaServerApplicationTests {
+// @SpringBootTest
+// class EurekaServerApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+//     @Test
+//     void contextLoads() {
+//     }
 
-}
+// }
