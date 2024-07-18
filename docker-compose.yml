@@ -2,6 +2,7 @@ version: "3"
 services:
   eureka-server:
     image: upskill-eureka-server:latest
+    container_name: eureka-server-container
     build:
       context: .
       dockerfile: Dockerfile
