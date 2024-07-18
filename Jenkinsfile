@@ -10,7 +10,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout code from GitHub
-                git url: 'https://github.com/manuel-larbi/spring-cloud-eureka-server.git', branch: 'main'
+                git branch: 'main', url: 'https://github.com/manuel-larbi/spring-cloud-eureka-server.git'
+            }
+        }
+
+        stage('Install Application'){
+            steps{
+                sh 'mvn clean package'
             }
         }
 
