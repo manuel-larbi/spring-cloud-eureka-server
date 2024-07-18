@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools{
-        maven "M3"
-    }
-
     environment {
         // Define environment variables
         DOCKER_IMAGE = "eureka-server-image"
