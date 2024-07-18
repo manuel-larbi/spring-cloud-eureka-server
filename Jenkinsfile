@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools{
+        maven "M3"
+    }
+
     environment {
         // Define environment variables
         DOCKER_IMAGE = "eureka-server-image"
@@ -14,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Install Application'){
+        stage('Maven Build'){
             steps{
                 sh 'mvn clean package'
             }
