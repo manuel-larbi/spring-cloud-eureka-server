@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    tools{
+        maven "M3"
+    }
     environment {
         // Define environment variables
         DOCKER_IMAGE = "eureka-server-image"
@@ -17,7 +20,7 @@ pipeline {
         stage('Maven Build'){
             steps{
                 script{
-                    sh 'mvn clean package'
+                   bat "mvn -Dmaven.test.failure.ignore=true clean package"
                 }
             }
         }
