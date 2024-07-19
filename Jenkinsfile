@@ -36,13 +36,18 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Deploy the application using Docker Compose
-                script {
-                    // Stop the existing containers
-                    bat 'docker-compose down'
+                withCredentials([string(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
+                        script {
+                            // Create .env file
+                            bat "copy %ENV_FILE% src\\main\\resources\\.env"
 
-                    // Start the containers
-                    bat 'docker-compose up -d'
+                            // Stop the existing containers
+                            bat "docker-compose down"
+
+                            // Start the containers
+                            bat "docker-compose up -d"
+                        }
+                    }
                 }
             }
         }
