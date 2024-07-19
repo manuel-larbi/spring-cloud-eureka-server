@@ -9,4 +9,4 @@ services:
     ports:
       - "8761:8761"
     env_file:
-      - src/main/resources/.env
+      - .env
