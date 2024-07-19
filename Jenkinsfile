@@ -36,7 +36,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                withCredentials([string(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
+                withCredentials([file(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
                     script {
                         // Create .env file
                         bat "copy %ENV_FILE% src\\main\\resources\\.env"
