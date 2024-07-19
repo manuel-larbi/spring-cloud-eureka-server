@@ -17,7 +17,7 @@ pipeline {
             }
         }
 
-        stage('Maven Build'){
+        stage('Package Application'){
             steps{
                 script{
                    bat "mvn -Dmaven.test.failure.ignore=true clean package"
@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
                 // Build the Docker image
                 script {
@@ -38,8 +38,11 @@ pipeline {
             steps {
                 // Deploy the application using Docker Compose
                 script {
-                    docker.compose.down
-                    docker.compose.up
+                    // Stop the existing containers
+                    sh 'docker-compose down'
+
+                    // Start the containers
+                    sh 'docker-compose up -d'
                 }
             }
         }
