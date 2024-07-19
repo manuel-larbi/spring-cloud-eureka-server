@@ -37,21 +37,19 @@ pipeline {
         stage('Deploy') {
             steps {
                 withCredentials([string(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
-                        script {
-                            // Create .env file
-                            bat "copy %ENV_FILE% src\\main\\resources\\.env"
+                    script {
+                        // Create .env file
+                        bat "copy %ENV_FILE% src\\main\\resources\\.env"
 
-                            // Stop the existing containers
-                            bat "docker-compose down"
+                        // Stop the existing containers
+                        bat "docker-compose down"
 
-                            // Start the containers
-                            bat "docker-compose up -d"
-                        }
+                        // Start the containers
+                        bat "docker-compose up -d"
                     }
                 }
             }
         }
-    }
 
     post {
         always {
