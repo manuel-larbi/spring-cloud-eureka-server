@@ -39,10 +39,10 @@ pipeline {
                 // Deploy the application using Docker Compose
                 script {
                     // Stop the existing containers
-                    sh 'docker-compose down'
+                    bat 'docker-compose down'
 
                     // Start the containers
-                    sh 'docker-compose up -d'
+                    bat 'docker-compose up -d'
                 }
             }
         }
