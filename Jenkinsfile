@@ -95,5 +95,11 @@ pipeline {
             // Clean up
             cleanWs()
         }
+        success {
+                    echo 'Build and deployment successful!'
+        }
+        failure {
+            echo 'Build or deployment failed.'
+        }
     }
 }
