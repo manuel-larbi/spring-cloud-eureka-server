@@ -44,6 +44,13 @@ pipeline {
             }
         }
 
+        stage('Debug Branch Name') {
+            steps{
+                script{
+                    echo "Current branch is: ${env.BRANCH_NAME}"
+                }
+            }
+        }
         stage('Deploy') {
            when {
                 anyOf {
