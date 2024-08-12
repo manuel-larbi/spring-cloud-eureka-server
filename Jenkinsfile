@@ -34,7 +34,20 @@ pipeline {
             }
         }
 
+        stage('Code Coverage') {
+            steps {
+                script {
+                    bat "mvn clean test jacoco:report"
+                    junit '**/target/test-classes/TEST-*.xml'
+                    jacoco(execPattern: '**/target/jacoco.exec', classPattern: '**/target/classes', sourcePattern: '**/src/main/java', inclusionPattern: '**/src/main/java/**/*.java')
+                }
+            }
+        }
+
         stage('Deploy') {
+            when {
+                branch 'main'
+            }
             steps {
                 withCredentials([file(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
                     script {
