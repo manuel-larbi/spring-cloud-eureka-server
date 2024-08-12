@@ -52,12 +52,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-           when {
-                anyOf {
-                    branch 'main'
-                    branch 'develop'
-                }
-            }
             steps {
                 withCredentials([file(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
                     script {
