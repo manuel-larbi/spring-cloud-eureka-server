@@ -39,7 +39,8 @@ pipeline {
             steps {
                 script{
                      docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_CREDENTIALS_ID}") {
-                     appImage.push("latest")
+                         appImage.push("latest")
+                     }
                 }
             }
         }
