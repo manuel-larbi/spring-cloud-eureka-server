@@ -77,13 +77,15 @@ pipeline {
 
     stage('Deploy App to Kubernetes') {
         steps {
-            kubeconfig(credentialsId: 'kubernetesCred') {
-                bat "kubectl apply -f eureka-deployment.yaml -n ${env.K8S_NAMESPACE}"
-                bat "kubectl apply -f eureka-config.yaml -n ${env.K8S_NAMESPACE}"
+            script {
+                kubeconfig(credentialsId: 'kubernetesCred') {
+                    bat "kubectl apply -f eureka-deployment.yaml -n ${env.K8S_NAMESPACE}"
+                    bat "kubectl apply -f eureka-config.yaml -n ${env.K8S_NAMESPACE}"
+                }
             }
-
 //             withCredentials([string(credentialsId: 'kubernetesCred', variable: 'kubeconfig-cred')]) {
-//                 // some block
+//                 bat "kubectl apply -f eureka-deployment.yaml -n ${env.K8S_NAMESPACE}"
+//                 bat "kubectl apply -f eureka-config.yaml -n ${env.K8S_NAMESPACE}"
 //             }
         }
     }
