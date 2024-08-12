@@ -6,7 +6,8 @@ pipeline {
     }
     environment {
         // Define environment variables
-        DOCKER_IMAGE = "eureka-server-image"
+        DOCKER_IMAGE = "manuellarbi/eureka-server-image"
+        DOCKER_CREDENTIALS_ID = "dockerlogin"
     }
 
     stages {
@@ -29,7 +30,16 @@ pipeline {
             steps {
                 // Build the Docker image
                 script {
-                    docker.build(DOCKER_IMAGE)
+                    appImage = docker.build(DOCKER_IMAGE)
+                }
+            }
+        }
+
+        stage('Push To DockerHub') {
+            steps {
+                script{
+                     docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_CREDENTIALS_ID}") {
+                     appImage.push("latest")
                 }
             }
         }
@@ -51,6 +61,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy') {
             steps {
                 withCredentials([file(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
