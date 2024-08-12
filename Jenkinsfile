@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     bat "mvn clean test jacoco:report"
-                    junit '**/target/test-classes/TEST-*.xml'
+                    junit '**/target/surefire-reports/TEST-*.xml'
                     jacoco(execPattern: '**/target/jacoco.exec', classPattern: '**/target/classes', sourcePattern: '**/src/main/java', inclusionPattern: '**/src/main/java/**/*.java')
                 }
             }
