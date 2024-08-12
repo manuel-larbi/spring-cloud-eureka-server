@@ -8,6 +8,7 @@ pipeline {
         // Define environment variables
         DOCKER_IMAGE = "manuellarbi/eureka-server-image"
         DOCKER_CREDENTIALS_ID = "dockerlogin"
+        K8S_NAMESPACE= "eureka-namespace"
     }
 
     stages {
@@ -31,16 +32,9 @@ pipeline {
                 // Build the Docker image
                 script {
                     appImage = docker.build(DOCKER_IMAGE)
-                }
-            }
-        }
-
-        stage('Push To DockerHub') {
-            steps {
-                script{
-                     docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_CREDENTIALS_ID}") {
+                    docker.withRegistry('https://registry.hub.docker.com', "${DOCKER_CREDENTIALS_ID}") {
                          appImage.push("latest")
-                     }
+                    }
                 }
             }
         }
@@ -63,7 +57,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Start Container') {
             steps {
                 withCredentials([file(credentialsId: 'ENV', variable: 'ENV_FILE')]) {
                     script {
@@ -78,6 +72,19 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+
+    stage('Deploy App to Kubernetes') {
+        steps {
+            kubeconfig(credentialsId: 'kubernetesCred') {
+                bat "kubectl apply -f eureka-deployment.yaml -n ${env.K8S_NAMESPACE}"
+                bat "kubectl apply -f eureka-config.yaml -n ${env.K8S_NAMESPACE}"
+            }
+
+//             withCredentials([string(credentialsId: 'kubernetesCred', variable: 'kubeconfig-cred')]) {
+//                 // some block
+//             }
         }
     }
 
