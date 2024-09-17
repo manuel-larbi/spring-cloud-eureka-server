@@ -1,12 +1,12 @@
 version: "3"
 services:
   eureka-server:
-    image: upskill-eureka-server:v1
-    container_name: eureka-server-container
+    image: manuellarbi/eureka-server-image:base
+    container_name: gtp-eureka-server-container
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8761:8761"
-    env_file:
-      - src/main/resources/.env
+#    env_file:
+#      - src/main/resources/.env

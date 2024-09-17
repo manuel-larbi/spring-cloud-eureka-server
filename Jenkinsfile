@@ -4,9 +4,10 @@ pipeline {
     tools{
         maven "M3"
     }
+
     environment {
         // Define environment variables
-        DOCKER_IMAGE = "manuellarbi/eureka-server-image"
+        DOCKER_IMAGE = "manuellarbi/eureka-server-image:base"
         DOCKER_CREDENTIALS_ID = "dockerlogin"
         K8S_NAMESPACE= "eureka-namespace"
     }
@@ -22,12 +23,12 @@ pipeline {
         stage('Package Application'){
             steps{
                 script{
-                   bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                   bat "mvn clean package"
                 }
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
                 // Build the Docker image
                 script {
@@ -45,14 +46,6 @@ pipeline {
                     bat "mvn clean test jacoco:report"
                     junit '**/target/surefire-reports/TEST-*.xml'
                     jacoco(execPattern: '**/target/jacoco.exec', classPattern: '**/target/classes', sourcePattern: '**/src/main/java', inclusionPattern: '**/src/main/java/**/*.java')
-                }
-            }
-        }
-
-        stage('Debug Branch Name') {
-            steps{
-                script{
-                    echo "Current branch is: ${env.BRANCH_NAME}"
                 }
             }
         }

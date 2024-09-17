@@ -25,7 +25,7 @@ spec:
             limits:
               cpu: "500m"
               memory: "1024Mi"
-          image: manuellarbi/eureka-server-image
+          image: manuellarbi/eureka-server:base
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8761
@@ -47,4 +47,4 @@ spec:
     - protocol: TCP
       port: 8761
       targetPort: 8761
-  type: LoadBalancer
+  type: NodePort
